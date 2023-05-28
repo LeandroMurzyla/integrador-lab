@@ -2,23 +2,26 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", "Geneva", Verdana, sans-serif;
+    font-family: "Kanit", sans-serif;
 }
 
 :root {
     /* Declaro variables CSS con colores principales */
-    --color-theme: #FFCE30;
-    --color-active: #288BA8;
-    --color-back-active: #746AB0;
+    --color-theme: #ffce30;
+    --color-active: #288ba8;
+    --color-back-active: #746ab0;
     --color-back-inactive: #c4c6c9;
-    --color-titulos: #E83845;
-    --color-texto-blanco: #FFF;
-    --color-gradient: linear-gradient(to right, var(--color-theme), var(--color-back-active));
+    --color-titulos: #e83845;
+    --color-texto-blanco: #fff;
+    --color-gradient: linear-gradient(to right,
+            var(--color-theme),
+            var(--color-back-active));
 }
 
 body {
     height: 100%;
     width: 100%;
+    background-color: #e0e0e0;
 }
 
 ul {
@@ -37,12 +40,14 @@ header {
     position: fixed;
     top: 0;
     width: 100%;
-    background-image: url('../img/FondoCine6.webp');
+    background-image: url("../img/FondoCine6.webp");
     border-radius: 0 0% 20px 20px;
     border-bottom: 2px solid var(--color-active);
 }
 
-nav > ul {
+
+
+nav>ul {
     display: flex;
     justify-content: space-between;
     justify-content: center;
@@ -69,13 +74,131 @@ nav li.current-page a {
     pointer-events: none;
 }
 
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu li {
+    display: inline-block;
+    margin-right: 10px;
+    /* Espacio entre las opciones de menú */
+}
+
+.menu li:last-child {
+    margin-right: 0;
+    /* Elimina el espacio a la derecha del último elemento */
+}
+
+.menu li a {
+    display: block;
+    padding: 8px 16px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    text-decoration: none;
+}
+
+#sec_peliculas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 15px;
+    text-align: left;
+}
+
+#sec_peliculas p {
+    color: var(--color-active);
+    text-align: left;
+}
+
+#sect-favorities-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+
+
+.contenedorPeliculasFavoritas {
+    background-color: #f5f5f5;
+      padding: 20px;
+      border-radius: 5px;
+      text-align: center; 
+}
+
+.contenedorPeliculasFavoritas img {
+    width: 100%;
+      max-width: 250px; 
+      height: auto;
+      object-fit: contain; 
+      border-radius: 20px;
+      margin: 0 auto 10px;
+      display: block;
+}
+
+.contenedorPeliculasFavoritas h3 {
+    text-align: center;
+}
+
+.contenedorPeliculasFavoritas p {
+    margin: 5px 0;
+    text-align: left;
+    color:var(--color-active) ;
+}
+
+.boton-favoritos {
+    background-color: gray;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 5px 20px;
+    cursor: pointer;
+    font-size: 10px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 1.5);
+}
+
+.contenedorGrilla {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.pelicula {
+    width: 23%;
+    margin-bottom: 20px;
+    text-align: center;
+    border-radius: 15px;
+}
+
+.pelicula img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.pelicula h3 {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.pelicula p {
+    margin: 5px 0;
+    color: #1d1d1d;
+    font-size: 12px;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
 main {
-    margin-top: 120px;
+    margin-top: 100px;
     overflow: auto;
     padding: 16px;
     padding-bottom: 60px;
     height: calc(100% - 120px);
     width: 100%;
+    background-color: #e0e0e0;
 }
 
 h1 {
@@ -84,7 +207,7 @@ h1 {
     color: var(--color-theme);
 }
 
-h1 > img {
+h1>img {
     width: 70px;
     vertical-align: middle;
     padding: 10px;
@@ -125,8 +248,102 @@ main p {
     margin-bottom: 16px;
 }
 
-#texto-ayuda{
+#form-movie-new {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#form-movie-new .fav-title {
     text-align: center;
+}
+
+#form-movie-new form {
+    display: flex;
+    align-items: center;
+}
+
+#form-movie-new input[type="text"] {
+    margin-bottom: 10px;
+}
+
+#form-movie-new button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    margin-left: 5px;
+}
+
+#texto-ayuda {
+    text-align: left;
+}
+
+#sec-contact-form {
+    text-align: center;
+}
+
+#sec-contact-form form {
+    margin-top: 10px;
+}
+
+.form-group {
+    margin-top: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input {
+    width: 300px;
+    padding: 12px;
+    border-radius: 5px;
+  }
+  
+  .form-group textarea {
+    width: 300px;
+    height: 120px;
+    padding: 12px;
+    resize: none;
+    border-radius: 5px;
+  }
+
+#limpiar-btn,
+    #enviar-btn {
+      background-color: green;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 50px; /* Redondea los botones */
+      margin-right: 10px;
+      border: none;
+    }
+
+label {
+    display: block;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    color: black;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+
+button[type="reset"],
+button[type="submit"] {
+    margin-right: 10px;
 }
 
 /* Media Query: Estilos a aplicar sólo en pantallas mayores a 400px */
@@ -154,7 +371,7 @@ main p {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    border-top: 2px solid #8900FF;
+    border-top: 2px solid #8900ff;
     border-right: 2px solid transparent;
     animation: spinner8217 0.8s linear infinite;
 }
@@ -197,47 +414,3 @@ main p {
 .verde {
     background-color: #28a745;
 }
-
-#sec-contact-form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50vh;
-  }
-  
-  #sec-contact-form form {
-    margin-top: 10px;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    display: block;
-    font-weight: bold;
-  }
-  
-  input[type="text"],
-  input[type="email"],
-  textarea {
-    width: 100%;
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  
-  button {
-    background-color: green;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  button[type="reset"],
-  button[type="submit"] {
-    margin-right: 10px;
-  }
-  
