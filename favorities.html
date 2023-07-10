@@ -12,6 +12,8 @@
       href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;1,100;1,200;1,300&family=Roboto+Mono:ital,wght@1,600&display=swap"
       rel="stylesheet"
     />
+    <script src="js/pages/favorities.js"></script>
+    <script src="js/common.js"></script>
   </head>
   <body>
     <header>
@@ -33,57 +35,26 @@
       <h2>Favoritos</h2>
 
       <section id="sect-favorities-list">
-        <div class="contenedorPeliculasFavoritas">
-          <img
-            src="https://image.tmdb.org/t/p/w500//fcFMd3HdyX7r5gtFwVnn2qr5Yhq.jpg"
-            alt="Imagen de la película"
-          />
-          <h3>Creed III</h3>
-          <p><strong>Código: </strong>677179</p>
-          <br />
-          <p><strong>Título: </strong>Creed III</p>
-          <p><strong>Idioma: </strong>en</p>
-          <p>
-            <strong>Resumen: </strong>En Los Ángeles durante el año 2002, Adonis
-            "Donnie" Creed se escapa con su mejor amigo Damian "Dame" Anderson
-            para ver a este último competir en un combate de boxeo. Después de
-            que Dame gana, Donnie se encuentra con un hombre llamado Leon en una
-            tienda de conveniencia, a quien ataca.
-          </p>
-        </div>
-
-        <div class="contenedorPeliculasFavoritas">
-          <img
-            src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRcUdT-6m0TSMqEL2XwwjZG4fX2Y5Eiug60h0jzCgiHxG90JEuX"
-            alt="Imagen de la película"
-          />
-          <h3>Granizo</h3>
-          <p><strong>Código: </strong>677172</p>
-          <br />
-          <p><strong>Título: </strong>Granizo</p>
-          <p><strong>Idioma: </strong>es</p>
-          <p>
-            <strong>Resumen: </strong>Un famoso meteorólogo de la televisión se
-            convierte en el enemigo público número uno cuando no logra evitar
-            una terrible tormenta de granizo.
-          </p>
-        </div>
+        <!-- Contenedor de cada película favorita -->
       </section>
 
       <section id="form-movie-new">
-        <!--Seccion para agregar una palicula favorita por codigo-->
+        <p class="fav-title">Agregar película favorita por código.</p>
+        <form id="add-movie-form">
+          <input type="text" id="movie-input" />
+          <button type="submit" id="add-movie-btn">Agregar</button>
+        </form>
       </section>
       <section id="sec-messages">
-        <!--Seccion para mensajes-->
+        <!-- Seccion para mensajes -->
       </section>
-      <section id="sec_peliculas">
-        <!--Seccion visualizacion de peliculas-->
-        <div class="contenedorPeliculas" id="contenedorPeliculas"></div>
-      </section>
-      <section id="sec_paginador_peliculas"></section>
     </main>
     <footer>
       <p>Desarrollado con ♥ - LC2</p>
     </footer>
+    <div id="loading-overlay">
+      <div id="loading-spinner"></div>
+    </div>
+    
   </body>
 </html>
