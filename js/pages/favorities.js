@@ -1,4 +1,4 @@
-
+// Bloque 1: Evento de carga del DOM
 window.addEventListener('DOMContentLoaded', async () => {
   try {
     updateFavoritesList();
@@ -16,6 +16,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
+// Bloque 2: Función para actualizar la lista de favoritos
 async function updateFavoritesList() {
   const favorites = JSON.parse(localStorage.getItem('FAVORITOS')) || [];
   const favoritesContainer = document.getElementById('sect-favorities-list');
@@ -56,6 +57,7 @@ async function updateFavoritesList() {
   }
 }
 
+// Bloque 3
 async function addVideoToMovie(movieId, movieElement) {
   try {
     const videos = await getVideosForMovie(movieId);
@@ -73,6 +75,7 @@ async function addVideoToMovie(movieId, movieElement) {
   }
 }
 
+// Bloque 4
 function createVideoIframe(videoKey) {
   const iframe = document.createElement('iframe');
   iframe.width = '560';
@@ -83,6 +86,7 @@ function createVideoIframe(videoKey) {
   return iframe;
 }
 
+// Bloque 5
 async function getVideosForMovie(movieId) {
   const apiKey = '779b1b25b7b8aec6a5757f06fce23985';
   const url = `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}`;
@@ -96,6 +100,7 @@ async function getVideosForMovie(movieId) {
   }
 }
 
+// Bloque 6
 async function addToFavorites(movieCode) {
   const movies = await getNowPlayingMoviesFromAPI();
   const movie = movies.find((movie) => movie.id === Number(movieCode));
@@ -121,6 +126,7 @@ async function addToFavorites(movieCode) {
   updateFavoritesList();
 }
 
+// Bloque 7
 async function removeFromFavorites(event, movieId) {
   const favorites = JSON.parse(localStorage.getItem('FAVORITOS')) || [];
   const updatedFavorites = favorites.filter((movie) => movie.id !== movieId);
@@ -138,6 +144,7 @@ async function removeFromFavorites(event, movieId) {
   }
 }
 
+// Bloque 8
 function showMessage(messageType, messageText) {
   const messagesContainer = document.getElementById('sec-messages');
   const messageElement = document.createElement('div');

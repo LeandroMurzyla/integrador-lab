@@ -1,10 +1,13 @@
+/*Bloque 1 */
 emailjs.init("Eg6N9On_YF_oNoQ0g");
 
+/*Bloque 2 */
 window.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector("form");
   form.addEventListener("submit", handleSubmit);
 });
 
+/*Bloque 3 */
 function handleSubmit(event) {
   event.preventDefault();
 
@@ -25,6 +28,7 @@ function handleSubmit(event) {
     });
 }
 
+/*Bloque 4 */
 function sendEmail(name, email, message) {
   // Configura los parámetros de EmailJS
   const serviceID = "service_et273tm"; 
@@ -41,6 +45,7 @@ function sendEmail(name, email, message) {
   return emailjs.send(serviceID, templateID, params);
 }
 
+/*Bloque 5 */
 function clearForm() {
   // Limpia los campos del formulario
   document.getElementById("nombre").value = "";
@@ -48,6 +53,7 @@ function clearForm() {
   document.getElementById("mensaje").value = "";
 }
 
+/*Bloque 6 */
 function showMessage(messageType, messageText) {
   const messagesContainer = document.getElementById("sec-messages");
   const messageElement = document.createElement("div");
