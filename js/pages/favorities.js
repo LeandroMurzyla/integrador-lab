@@ -1,3 +1,4 @@
+
 window.addEventListener('DOMContentLoaded', async () => {
   try {
     updateFavoritesList();
@@ -83,7 +84,7 @@ function createVideoIframe(videoKey) {
 }
 
 async function getVideosForMovie(movieId) {
-  const apiKey = '779b1b25b7b8aec6a5757f06fce23985'; // Reemplaza con tu propia API Key de The Movie Database
+  const apiKey = '779b1b25b7b8aec6a5757f06fce23985';
   const url = `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}`;
   const response = await fetch(url);
   const data = await response.json();

@@ -1,4 +1,6 @@
+/*Bloque 1*/ 
 window.addEventListener('DOMContentLoaded', async () => {
+  /*Bloque 2*/ 
   try {
     const movies = await getNowPlayingMoviesFromAPI();
     const moviesContainer = document.getElementById('sec_peliculas');
@@ -6,6 +8,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     moviesContainer.innerHTML = ''; // Limpiar contenido previo
 
     movies.forEach((movie) => {
+      /*Bloque 3*/
       const { poster_path, title, id, original_title, original_language, release_date } = movie;
 
       const movieElement = document.createElement('div');
@@ -20,21 +23,24 @@ window.addEventListener('DOMContentLoaded', async () => {
         <p><strong>Año:</strong> ${release_date}</p>
         <button class="boton-favoritos">Agregar a favoritos</button>
       `;
-
+      /*Bloque 4*/
       movieElement.querySelector('.boton-favoritos').addEventListener('click', async (event) => {
         await addToFavorites(event, id);
       });
 
       moviesContainer.appendChild(movieElement);
+
     });
   } catch (error) {
     console.error('Error al obtener las películas:', error);
   }
 });
 
+/*Bloque 5*/
 async function addToFavorites(event, movieCode) {
   event.preventDefault();
 
+/*Bloque 6*/
   const favorites = JSON.parse(localStorage.getItem('FAVORITOS')) || [];
   const movieElement = event.target.parentNode;
   const movieInfo = {
@@ -46,6 +52,7 @@ async function addToFavorites(event, movieCode) {
     release_date: movieElement.querySelector('p:nth-child(6)').textContent.trim()
   };
 
+  /*Bloque 7*/
   // Validar si el valor ingresado es numérico
   if (isNaN(movieInfo.id)) {
     showMessage('error-message', 'El código ingresado debe ser numérico');
@@ -59,18 +66,24 @@ async function addToFavorites(event, movieCode) {
     return;
   }
 
+
+  /*Bloque 8*/
   // Agregar película a favoritos
   favorites.push(movieInfo);
   localStorage.setItem('FAVORITOS', JSON.stringify(favorites));
   showMessage('success-message', 'Película agregada con éxito');
 
+ /*Bloque 9*/
   const successMessage = document.querySelector('.success-message');
   successMessage.scrollIntoView({ behavior: 'smooth' });
 
+
+/*Bloque 10*/
   // Enviar mensaje al archivo favorities.js para mostrar el mensaje de éxito
   window.postMessage({ type: 'success', message: 'Película agregada con éxito' }, '*');
 }
 
+/*Bloque 11*/
 function showMessage(messageType, messageText) {
   const messagesContainer = document.getElementById('sec-messages');
   const messageElement = document.createElement('div');

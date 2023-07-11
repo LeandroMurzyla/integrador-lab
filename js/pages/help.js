@@ -27,8 +27,8 @@ function handleSubmit(event) {
 
 function sendEmail(name, email, message) {
   // Configura los parámetros de EmailJS
-  const serviceID = "service_et273tm"; // Reemplaza con tu Service ID de EmailJS
-  const templateID = "template_ddg9qr9"; // Reemplaza con tu Template ID de EmailJS
+  const serviceID = "service_et273tm"; 
+  const templateID = "template_ddg9qr9";
 
   // Crea el objeto de parámetros para enviar el email
   const params = {
