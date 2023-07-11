@@ -10,6 +10,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   /*Bloque 3*/
   const btnAnterior = document.getElementById('btnAnterior');
   const btnSiguiente = document.getElementById('btnSiguiente');
+  const addMovieForm = document.getElementById('add-movie-form'); // Referencia al formulario
 
   let currentPage = 1;
 
@@ -26,23 +27,10 @@ window.addEventListener('DOMContentLoaded', async () => {
       moviesContainer.innerHTML = ''; // Limpiar contenido previo
 
       movies.forEach((movie) => {
-        const { poster_path, title, id, original_title, original_language, release_date } = movie;
-
-        const movieElement = document.createElement('div');
-        movieElement.classList.add('pelicula');
-
-        movieElement.innerHTML = `
-          <img src="https://image.tmdb.org/t/p/w500/${poster_path}" alt="Imagen de la película" />
-          <h3>${title}</h3>
-          <p><strong>Código:</strong> ${id}</p>
-          <p><strong>Título:</strong> ${original_title}</p>
-          <p><strong>Idioma:</strong> ${original_language}</p>
-          <p><strong>Año:</strong> ${release_date}</p>
-          <button class="boton-favoritos">Agregar a favoritos</button>
-        `;
+        const movieElement = createMovieElement(movie);
 
         movieElement.querySelector('.boton-favoritos').addEventListener('click', async (event) => {
-          await addToFavorites(event, id);
+          await addToFavorites(event, movie.id);
         });
 
         moviesContainer.appendChild(movieElement);
@@ -65,40 +53,37 @@ window.addEventListener('DOMContentLoaded', async () => {
     updateMoviesPage(currentPage + 1);
   });
 
-  try {
-    const movies = await getMoviesByPage(currentPage);
-    const moviesContainer = document.getElementById('sec_peliculas');
+  // Oyente de eventos para el formulario
+  addMovieForm.addEventListener('submit', async (event) => {
+    event.preventDefault(); // Prevenir la recarga de la página
 
-    moviesContainer.innerHTML = '';
+    const movieIdInput = document.getElementById('movie-input');
+    const movieId = movieIdInput.value.trim();
 
-    movies.forEach((movie) => {
-      const { poster_path, title, id, original_title, original_language, release_date } = movie;
+    if (!movieId) {
+      showMessage('error-message', 'Debe ingresar un ID de película.');
+      return;
+    }
 
-      const movieElement = document.createElement('div');
-      movieElement.classList.add('pelicula');
+    const movie = await getMovieByIdFromAPI(movieId);
+    if (!movie) {
+      showMessage('error-message', 'No se encontró ninguna película con ese ID.');
+      return;
+    }
 
-      movieElement.innerHTML = `
-        <img src="https://image.tmdb.org/t/p/w500/${poster_path}" alt="Imagen de la película" />
-        <h3>${title}</h3>
-        <p><strong>Código:</strong> ${id}</p>
-        <p><strong>Título:</strong> ${original_title}</p>
-        <p><strong>Idioma:</strong> ${original_language}</p>
-        <p><strong>Año:</strong> ${release_date}</p>
-        <button class="boton-favoritos">Agregar a favoritos</button>
-      `;
+    const newEvent = {
+      preventDefault: () => {},
+      target: {
+        parentNode: createMovieElement(movie),
+      },
+    };
+    await addToFavorites(newEvent, movie.id);
 
-      movieElement.querySelector('.boton-favoritos').addEventListener('click', async (event) => {
-        await addToFavorites(event, id);
-      });
+    movieIdInput.value = '';
+  });
 
-      moviesContainer.appendChild(movieElement);
-    });
-  } catch (error) {
-    console.error('Error al obtener las películas:', error);
-    showMessage('error-message', 'Error al obtener las películas');
-  }
+  updateMoviesPage(currentPage);
 });
-
 
 /*Bloque 4*/
 async function addToFavorites(event, movieCode) {
@@ -106,19 +91,7 @@ async function addToFavorites(event, movieCode) {
 
   const favorites = JSON.parse(localStorage.getItem('FAVORITOS')) || [];
   const movieElement = event.target.parentNode;
-  const movieInfo = {
-    poster_path: movieElement.querySelector('img').getAttribute('src'),
-    title: movieElement.querySelector('h3').textContent.trim(),
-    id: movieCode,
-    original_title: movieElement.querySelector('p:nth-child(4)').textContent.trim(),
-    original_language: movieElement.querySelector('p:nth-child(5)').textContent.trim(),
-    release_date: movieElement.querySelector('p:nth-child(6)').textContent.trim()
-  };
-
-  if (isNaN(movieInfo.id)) {
-    showMessage('error-message', 'El código ingresado debe ser numérico');
-    return;
-  }
+  const movieInfo = getMovieInfoFromElement(movieElement);
 
   const existingMovie = favorites.find(movie => movie.id === movieInfo.id);
   if (existingMovie) {
@@ -136,7 +109,6 @@ async function addToFavorites(event, movieCode) {
   window.postMessage({ type: 'success', message: 'Película agregada con éxito' }, '*');
 }
 
-
 /*Bloque 5*/
 function showMessage(messageType, messageText) {
   const messagesContainer = document.getElementById('sec-messages');
@@ -149,4 +121,36 @@ function showMessage(messageType, messageText) {
   setTimeout(() => {
     messagesContainer.removeChild(messageElement);
   }, 3000);
+}
+
+// Esta nueva función crea un elemento de película a partir de los datos de una película
+function createMovieElement(movie) {
+  const { poster_path, title, id, original_title, original_language, release_date } = movie;
+
+  const movieElement = document.createElement('div');
+  movieElement.classList.add('pelicula');
+
+  movieElement.innerHTML = `
+    <img src="https://image.tmdb.org/t/p/w500/${poster_path}" alt="Imagen de la película" />
+    <h3>${title}</h3>
+    <p><strong>Código:</strong> ${id}</p>
+    <p><strong>Título:</strong> ${original_title}</p>
+    <p><strong>Idioma:</strong> ${original_language}</p>
+    <p><strong>Año:</strong> ${release_date}</p>
+    <button class="boton-favoritos">Agregar a favoritos</button>
+  `;
+
+  return movieElement;
+}
+
+// Esta nueva función obtiene la información de una película a partir de un elemento de película
+function getMovieInfoFromElement(movieElement) {
+  return {
+    poster_path: movieElement.querySelector('img').getAttribute('src'),
+    title: movieElement.querySelector('h3').textContent.trim(),
+    id: parseInt(movieElement.querySelector('p:nth-child(3)').textContent.replace('Código: ', '').trim()),
+    original_title: movieElement.querySelector('p:nth-child(4)').textContent.replace('Título: ', '').trim(),
+    original_language: movieElement.querySelector('p:nth-child(5)').textContent.replace('Idioma: ', '').trim(),
+    release_date: movieElement.querySelector('p:nth-child(6)').textContent.replace('Año: ', '').trim()
+  };
 }
